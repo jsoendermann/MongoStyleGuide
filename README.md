@@ -19,7 +19,7 @@
 
 - [1.1](#general--mix) **Mixed types**: Don't mix values of different types in one column.
 
-| <span style="color: red">Bad column</style> | <span style="color: green">Good column</span> |
+| <span style="color: red">Bad column</span> | <span style="color: green">Good column</span> |
 | ---------- | ----------- |
 | 1          | 1           |
 | "2"        | 2           |
