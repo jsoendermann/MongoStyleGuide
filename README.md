@@ -46,9 +46,9 @@
 
 ## Enumerations
 
-An enumeration is a type that allows a limited number of values, e.g. a userType field that can contain the values "DOCTOR", "NURSE", "PATIENT" and "ADMINISTRATOR"
+An enumeration is a type that allows a limited number of values, e.g. a userType field that can contain the values `"DOCTOR"`, `"NURSE"`, `"PATIENT"` and `"ADMINISTRATOR"`
 
-- [2.1](#enumerations--modelling) **Modelling**: Always model your enums as uppercase string constants, e.g. "WAITING", "IN_PROGRESS" and "COMPLETED"
+- [2.1](#enumerations--modelling) **Modelling**: Always model your enums as uppercase string constants, e.g. `"WAITING"`, `"IN_PROGRESS"` and `"COMPLETED"`
 
     > Why?
     > 1. Favoring strings over booleans or numbers means your data is self-documenting. If your gender field contains the value `1`, you don't know if that means male, female or something else
@@ -79,8 +79,8 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 - [3.1](#booleans--booleans-and-enums) **Booleans and enums**: Don't model things as booleans that have no natural correspondence to true/false, even if they only have two possible states. Use enums instead
 
     > Why?
-    > 1. Booleans can not be extended beyond two possible values but the field might have to be extended later to include additional values, e.g. a boolean field "hasArrived" could might have to be extended later to include the possibility of cancelled appointments
-    > 1. It makes meaning explicit. If your gender field contains the value true, you don't know if that means male or female
+    > 1. Booleans can not be extended beyond two possible values but the field might have to change later to include additional values, e.g. a boolean field "hasArrived" could not be extended later to include the possibility of cancelled appointments
+    > 1. It makes meaning explicit. If your gender field contains the value `true`, you can't tell if that means male or female
 
     | :x: gender              | :white_check_mark: gender |
     | :---------------- | :----------------- |
@@ -101,7 +101,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | true             | false         | false         |
 
     :white_check_mark:
-    
+
     | color |
     | :---------------- |
     | "BLUE"              |
@@ -109,8 +109,21 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 
 ## Dates
 
-- Don't save dates as serialized ISO strings like "2017-04-14T06:41:21.616Z". Do save them as Date objects
-- **Don't use Date when all you are concerned with is a timezone independent day value**. Do use strings of the form "YYYY-MM-DD" in those cases
+- [3.1](#dates--iso-strings) **ISO strings**: Make sure you never save dates as ISO strings like `"2017-04-14T06:41:21.616Z"`
+
+    | :x:              | :white_check_mark: |
+    | :---------------- | :----------------- |
+    | `"2017-04-14T06:41:21.616Z"`             | `ISODate("2017-04-14T06:41:21.616Z")`            |
+
+    
+- [3.2](#dates--day-strings) **Day strings**: Don't use Date when all you are concerned with is a timezone independent day value. Instead, use strings of the form "YYYY-MM-DD"
+
+    | :x: dateOfBirth             | :white_check_mark: dateOfBirth |
+    | :---------------- | :----------------- |
+    | `ISODate("1989-10-03T06:41:21.616Z")`             | `'1989-10-03'`            |
+
+
+
 
 ## Null and undefined
 
