@@ -27,16 +27,16 @@
 
 - [1.2](#general--object-schema) **Object columns**: If you have a column that contains objects, make sure all objects share the same format
 
-| Bad column       | Good column   |
-| ---------------- | ------------- |
+| :x:       | :white_check_mark:   |
+| :---------------- | :------------- |
 | { value: 42 }    | { value: 42 } |
 | { value: "foo" } | { value: 43 } |
 | { }              | { value: 44 } |
 
 - [1.3](#general--falsiness) **Falsiness**: Don't use the empty string or 0 for their falsiness
 
-| Bad column       | Good column   |
-| ---------------- | ------------- |
+| :x:       | :white_check_mark:   |
+| :---------------- | :------------- |
 | "foo"            | "foo"         |
 | "bar"            | "bar"         |
 | ""               | null          |
