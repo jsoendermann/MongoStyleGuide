@@ -31,19 +31,19 @@
     | :x:       | :white_check_mark:     |
     | :---------------- | :------------- |
     | { value: 42 }    | { value: 42 }   |
-    | { value: "foo" } | { value: 43 }   |
+    | { otherValue: "foo" } | { value: 43 }   |
     | { }              | { value: null } |
 
 <a name="general--falsiness"></a>
 - [1.3](#general--falsiness) **Falsiness**: Don't use `""` or `0` for their falsiness
 
-    > Why? It's very easy to write buggy code otherwise, which is also why you should not type coerce in your if conditions.
+    > Why? It's very easy to write buggy code otherwise
 
-    | :x:       | :white_check_mark:   |
+    | :x: height      | :white_check_mark: height  |
     | :---------------- | :------------- |
-    | "foo"            | "foo"         |
-    | "bar"            | "bar"         |
-    | ""               | null          |
+    | 182            | 182         |
+    | 167            | 167         |
+    | 0               | null          |
 
 
 ## Enumerations
