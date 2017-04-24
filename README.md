@@ -113,39 +113,80 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 
     | :x:              | :white_check_mark: |
     | :---------------- | :----------------- |
-    | `"2017-04-14T06:41:21.616Z"`             | `ISODate("2017-04-14T06:41:21.616Z")`            |
+    | "2017-04-14T06:41:21.616Z"             | ISODate("2017-04-14T06:41:21.616Z")            |
 
     
 - [3.2](#dates--day-strings) **Day strings**: Don't use Date when all you are concerned with is a timezone independent day value. Instead, use strings of the form "YYYY-MM-DD"
 
     | :x: dateOfBirth             | :white_check_mark: dateOfBirth |
     | :---------------- | :----------------- |
-    | `ISODate("1989-10-03T06:41:21.616Z")`             | `'1989-10-03'`            |
-
-
-
+    | ISODate("1989-10-03T06:41:21.616Z")             | '1989-10-03'            |
 
 ## Null and undefined
 
-- don't overload the meaning. "missing values"
+- [4.1](#null-and-undefined--no-overloading) **No overloading**: Don't overload the meaning of `null` and `undefined` to mean anything other than "missing value"
 
-- Don't use null or undefined when there is a sensible default (e.g. when you have a "notes" field, the initial value should be the empty string, not null). Do prefer null over undefined or missing values
+    > Why? It breaks expectations and makes it impossible to interpret the data by looking at it.
+
+- [4.2](#null-and-undefined--sensible-default) **Default**: Don't use null or undefined when there is a sensible default value like `0`, `""` or `[]`
+
+    > Why? It keeps your types pure
+
+    | :x: notes             | :white_check_mark: notes |
+    | :---------------- | :----------------- |
+    | "Some interesting observation"             | "Some interesting observation"           |
+    | null             | ""           |
+
+    | :x: comments             | :white_check_mark: comments |
+    | :---------------- | :----------------- |
+    | [ "First", "Great post!" ]             | [ "First", "Great post!" ]    |
+    | null             | []           |
+
+- [4.3](#null-and-undefined--dont-mix) **Don't mix the two**: Don't mix `null` and `undefined` in the same column
+
+    > Why? It makes it hard to understand what the two values mean
 
 ## Other types
 
-- Don't save numbers as strings. Do make an exception for data like phone numbers or shenfenzheng ids, for which leading zeroes are significant 
-- Don't mix ObjectIds with any other types like string. Do use ObjectIds for _id when there is no obvious unique field suitable to be used as _id
+- [5.1](#other-types--numbers-as-strings) **Numbers as strings**: Don't save numbers as strings except when saving data like phone numbers or ID numbers for which leading zeroes are significant
+
+    > Why? It means you don't have to cast when performing arithmetic
+
+    | :x: height             | :white_check_mark: height |
+    | :---------------- | :----------------- |
+    | "178"             | 178           |
+    | "182"             | 182           |
+
+    | :x: phoneNumber             | :white_check_mark: phoneNumber |
+    | :---------------- | :----------------- |
+    | "020123123123"            | 20123123123    |
 
 ## Names
 
-- Don't use snake_case. Do use camelCase
-- Don't use abbreviations except for widely used, domain specific language. Do learn the lingo of your field
+- [6.1](#names--abbreviations) **Abbreviations**: Don't use abbreviations except for domain specific language. When you do abbreviate, capitalize
+
+    > Why? It makes your data harder to read
+
+    :x: `apTime`
+    :white_check_mark: `appointmentTime`
+    :x: `ankleBrachialPressureIndexRight`
+    :white_check_mark: `ABIRight`
+    :x: `healthInformationSystemNumber`
+    :white_check_mark: `HISNumber`
+
+
+- [6.2](#names--case) **Case**: Use camelCase over snake_case
+
+    > Why? It's what we use in JavaScript
 
 ## Object modelling
 
-- **Don't let your objects keep growing. Do prune them and make judicious use of nested objects to group properties that belong together** (e.g. combining "footAssessmentState", "eyeAssessmentState" and "nutritionAssessmentState" into an "assessmentStates" nested object with properties "foot", "eye" and "nutrition"
-- **Don't excessively nest objects. Do consider breaking up your data if you find yourself needing deeply nested objects**
+- [7.1](#object-modelling--growth) **Growth**: Don't let your objects keep growing. Prune and merge properties into nested objects where appropriate (e.g. by combining "footAssessmentState", "eyeAssessmentState" and "nutritionAssessmentState" into a nested "assessmentStates" object with properties "foot", "eye" and "nutrition")
+
+- [7.1](#object-modelling--excessive-nesting) **Nesting**: Don't excessively nest objects. Do consider breaking up your data if you find yourself needing deeply nested objects
 
 ## Todo
 
+Prefer null over undefined/missing?
 Normalization/denormalization
+ObjectIds
