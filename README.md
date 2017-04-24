@@ -27,11 +27,11 @@
 
 - [1.2](#general--object-schema) **Object columns**: If you have a column that contains objects, make sure all objects share the same format
 
-    | :x:       | :white_check_mark:   |
+    | :x:       | :white_check_mark:     |
     | :---------------- | :------------- |
-    | { value: 42 }    | { value: 42 } |
-    | { value: "foo" } | { value: 43 } |
-    | { }              | { value: 44 } |
+    | { value: 42 }    | { value: 42 }   |
+    | { value: "foo" } | { value: 43 }   |
+    | { }              | { value: null } |
 
 - [1.3](#general--falsiness) **Falsiness**: Don't use the empty string or 0 for their falsiness
 
@@ -81,7 +81,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 
 ## Booleans
 
-- [3.1](#enumerations--modelling) **Booleans and enums**: Don't model things as booleans that have no natural correspondence to true/false, even if they only have two possible states. Use enums instead
+- [3.1](#booleans--booleans-and-enums) **Booleans and enums**: Don't model things as booleans that have no natural correspondence to true/false, even if they only have two possible states. Use enums instead
 
     > Why?
     > 1. Booleans can not be extended beyond two possible values but the field might have to be extended later to include additional values, e.g. a boolean field "hasArrived" could might have to be extended later to include the possibility of cancelled appointments
@@ -92,10 +92,23 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | false             | "MALE"              |
     | true             | "FEMALE"           |
 
+- [3.2](#booleans--prefix) **Prefix**: Model things as booleans that are prefixed with verbs such as "is..." or "has..." (e.g. "isDoctor", "didAnswerPhoneCall" or "hasDiabetes")
 
+- [3.2](#booleans--orthogonal) **Orthogonality**: If you have several mutually exclusive boolean fields in your collection, merge them into an enum
 
-- Do model things as booleans that are prefixed with verbs such as "is..." or "has..." (e.g. "isDoctor", "didAnswerPhoneCall" or "hasDiabetes")
-- **Don't include multiple mutually exclusive boolean keys in your collection. Do merge them into an enum**
+    > Why? So that it's impossible to save invalid data in your db like a car that's green and red simultaneously
+
+    :x: 
+    | isRed              | isBlue | isGreen |
+    | :---------------- | :----------------- | :----------------- |
+    | false             | true              |  false              |
+    | true             | false         | false         |
+
+    :white_check_mark: 
+    | color |
+    | :---------------- |
+    | "BLUE"              |
+    | "RED"         |
 
 ## Dates
 
