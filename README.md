@@ -37,7 +37,7 @@
 <a name="general--falsiness"></a>
 - [1.3](#general--falsiness) **Falsiness**: Don't use `""` or `0` for their falsiness
 
-    > Why? It's very easy to write buggy code otherwise which is also why you should not coerce to booleans in your if statements.
+    > Why? It's very easy to write buggy code otherwise, which is also why you should not type coerce in your if conditions.
 
     | :x:       | :white_check_mark:   |
     | :---------------- | :------------- |
@@ -127,9 +127,11 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 <a name="dates--day-strings"></a>
 - [4.2](#dates--day-strings) **Day strings**: Don't use Date when all you are concerned with is a timezone independent day value. Instead, use strings of the form "YYYY-MM-DD"
 
+    > Why? It makes it very easy to check whether a day falls on a certain day and it keeps your database clean
+
     | :x: dateOfBirth             | :white_check_mark: dateOfBirth |
     | :---------------- | :----------------- |
-    | ISODate("1989-10-03T06:41:21.616Z")             | '1989-10-03'            |
+    | ISODate("1989-10-03T06:41:21.616Z")             | "1989-10-03"            |
 
 ## Null and undefined
 
