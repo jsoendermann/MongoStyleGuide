@@ -14,7 +14,6 @@
 
 
 ## General
-<a name="general"></a>
 
 - [1.1](#general--mix) **Mixed types**: Don't mix values of different types in one column. Restrict yourself to one type per column
 
@@ -46,7 +45,6 @@
 
 
 ## Enumerations
-<a name="enumerations"></a>
 
 An enumeration is a type that allows a limited number of values, e.g. a userType field that can contain the values "DOCTOR", "NURSE", "PATIENT" and "ADMINISTRATOR"
 
@@ -60,23 +58,42 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | :---------------- | :----------------- |
     | 0             | "MALE"              |
     | 1             | "FEMALE"           |
-    
+
     | :x: gender              | :white_check_mark: gender |
     | :---------------- | :----------------- |
     | "男"             | "MALE"              |
     | "女"             | "FEMALE"           |
-    
+
     | :x: gender              | :white_check_mark: gender |
     | :---------------- | :----------------- |
     | true             | "MALE"              |
     | false             | "FEMALE"           |
 
-- Don't use null, undefined **or any other value or type** in your enum columns. Do give every state an **explicit enum value**, including **initial, undecided or unknown**
-- bad: 男女 good: male/female
+- [2.2](#enumerations--explicit) **Explicit states**: Don't use `null`, `undefined`, or any value except upper case string constants in your enums. This includes initial, undecided or unknown states
+
+    > Why? This makes the meaning explicit. If you have an assessmentState field that's set to `null`, you can't tell whether that means "no assessment necessary", "not applicable", "patient didn't show up", "undecided" or any other possible state
+
+    | :x: assessmentState | :white_check_mark: assessmentState |
+    | :------------------ | :--------------------------------- |
+    | null                | "NOT_REQUIRED"                     |
+    | *missing*           | "NOT_APPLICABLE"                   |
+
 
 ## Booleans
 
-- Don't model things as booleans that have no natural correspondence to true/false, even if they only have two possible states (e.g. a gender field that only contains "MALE" and "FEMALE". Also keep in mind that fields might have to be extended later to include additional values, a boolean field "hasArrived" could not be extended later to include the possibility of cancelled appointments).
+- [3.1](#enumerations--modelling) **Booleans and enums**: Don't model things as booleans that have no natural correspondence to true/false, even if they only have two possible states. Use enums instead
+
+    > Why?
+    > 1. Booleans can not be extended beyond two possible values but the field might have to be extended later to include additional values, e.g. a boolean field "hasArrived" could might have to be extended later to include the possibility of cancelled appointments
+    > 1. It makes meaning explicit. If your gender field contains the value true, you don't know if that means male or female
+
+    | :x: gender              | :white_check_mark: gender |
+    | :---------------- | :----------------- |
+    | false             | "MALE"              |
+    | true             | "FEMALE"           |
+
+
+
 - Do model things as booleans that are prefixed with verbs such as "is..." or "has..." (e.g. "isDoctor", "didAnswerPhoneCall" or "hasDiabetes")
 - **Don't include multiple mutually exclusive boolean keys in your collection. Do merge them into an enum**
 
@@ -86,6 +103,8 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 - **Don't use Date when all you are concerned with is a timezone independent day value**. Do use strings of the form "YYYY-MM-DD" in those cases
 
 ## Null and undefined
+
+- don't overload the meaning. "missing values"
 
 - Don't use null or undefined when there is a sensible default (e.g. when you have a "notes" field, the initial value should be the empty string, not null). Do prefer null over undefined or missing values
 
