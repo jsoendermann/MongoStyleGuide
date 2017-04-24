@@ -14,26 +14,43 @@
 
 
 ## General
-
-<a name="general"></a><a name="1.1"></a>
+<a name="general"></a>
 
 - [1.1](#general--mix) **Mixed types**: Don't mix values of different types in one column. Restrict yourself to one type per column
 
-| :x:          |:white_check_mark: |
-| :------------ | :----------- |
-| 1            | 1           |
-| "2"          | 2           |
-| { value: 3 } | 3           |
+    > Why? This way, you don't have to typecheck or cast when you consume the data.
+
+    | :x:           |:white_check_mark: |
+    | :------------ | :---------------- |
+    | 1             | 1                 |
+    | "2"           | 2                 |
+    | { value: 3 }  | 3                 |
 
 - [1.2](#general--object-schema) **Object columns**: If you have a column that contains objects, make sure all objects share the same format
 
-| :x:       | :white_check_mark:   |
-| :---------------- | :------------- |
-| { value: 42 }    | { value: 42 } |
-| { value: "foo" } | { value: 43 } |
-| { }              | { value: 44 } |
+    | :x:       | :white_check_mark:   |
+    | :---------------- | :------------- |
+    | { value: 42 }    | { value: 42 } |
+    | { value: "foo" } | { value: 43 } |
+    | { }              | { value: 44 } |
 
 - [1.3](#general--falsiness) **Falsiness**: Don't use the empty string or 0 for their falsiness
+
+    > Why? It's very easy to write buggy code otherwise which is also why you should not coerce to booleans in your if statements.
+
+    | :x:       | :white_check_mark:   |
+    | :---------------- | :------------- |
+    | "foo"            | "foo"         |
+    | "bar"            | "bar"         |
+    | ""               | null          |
+
+
+## Enumerations
+<a name="enumerations"></a>
+
+An enumeration is a type that allows a limited number of values, e.g. "DOCTOR", "NURSE", "PATIENT" and "ADMINISTRATOR"
+
+- [2.1](#enumerations--modelling) **Modelling**: Always model 
 
 | :x:       | :white_check_mark:   |
 | :---------------- | :------------- |
@@ -41,11 +58,9 @@
 | "bar"            | "bar"         |
 | ""               | null          |
 
-
-## Enums
-
 - Don't use numbers, booleans or **any other types** to model **enumerations**. Do model them as uppercase string constants, e.g. "WAITING", "IN_PROGRESS" and "COMPLETED". 
 - Don't use null, undefined **or any other value or type** in your enum columns. Do give every state an **explicit enum value**, including **initial, undecided or unknown**
+- bad: 男女 good: male/female
 
 ## Booleans
 
@@ -76,3 +91,7 @@
 
 - **Don't let your objects keep growing. Do prune them and make judicious use of nested objects to group properties that belong together** (e.g. combining "footAssessmentState", "eyeAssessmentState" and "nutritionAssessmentState" into an "assessmentStates" nested object with properties "foot", "eye" and "nutrition"
 - **Don't excessively nest objects. Do consider breaking up your data if you find yourself needing deeply nested objects**
+
+## Todo
+
+Normalization/denormalization
