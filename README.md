@@ -8,7 +8,7 @@
   1. [Dates](#dates)
   1. [Null and undefined](#null-and-undefined)
   1. [Other types](#other-types)
-  1. [names](#names)
+  1. [Names](#names)
   1. [Object modelling](#object-modelling)
   1. [Todo](#todo)
 
@@ -19,11 +19,11 @@
 
 - [1.1](#general--mix) **Mixed types**: Don't mix values of different types in one column.
 
-| Bad column | Good column |
+| <span style="color: red">Bad column</style> | <span style="color: green">Good column</span> |
 | ---------- | ----------- |
 | 1          | 1           |
 | "2"        | 2           |
-| {}         | 0           |
+| { }        | 0           |
 
 - Don't mix types. **Do be conservative in what you write liberal in what you accept**
 - Don't use the empty string or 0 for their falsiness. **Do make non-casting, explicit comparisons**
