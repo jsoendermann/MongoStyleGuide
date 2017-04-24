@@ -197,10 +197,13 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     - :white_check_mark: `HISNumber`
 
 
-<a name="names--case"></a>
-- [7.2](#names--case) **Case**: Use camelCase over snake_case
+<a name="names--key-names"></a>
+- [7.2](#names--key-names) **Case**: Use camelCase over snake_case for key names
 
-    > Why? It's what we use in JavaScript
+    > Why? It's what we use in JavaScript which means we don't have to mix the two in our code
+
+<a name="names--collection-names"></a>
+- [7.3](#names--collection-names) **Collection names**: Collection names should be pluralized and in camelCase. Use dots when there is a relationship between collections (e.g. `user` and `user.appointments`)
 
 ## Object modelling
 
