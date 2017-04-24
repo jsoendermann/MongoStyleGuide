@@ -17,7 +17,7 @@
 
 <a name="general"></a><a name="1.1"></a>
 
-- [1.1](#general--mix) **Mixed types**: Don't mix values of different types in one column.
+- [1.1](#general--mix) **Mixed types**: Don't mix values of different types in one column. Restrict yourself to one type per column
 
 | Bad column   | Good column |
 | ------------ | ----------- |
@@ -25,8 +25,22 @@
 | "2"          | 2           |
 | { value: 3 } | 3           |
 
-- Don't mix types. **Do be conservative in what you write liberal in what you accept**
-- Don't use the empty string or 0 for their falsiness. **Do make non-casting, explicit comparisons**
+- [1.2](#general--object-schema) **Object columns**: If you have a column that contains objects, make sure all objects share the same format
+
+| Bad column       | Good column   |
+| ---------------- | ------------- |
+| { value: 42 }    | { value: 42 } |
+| { value: "foo" } | { value: 43 } |
+| { }              | { value: 44 } |
+
+- [1.3](#general--falsiness) **Falsiness**: Don't use the empty string or 0 for their falsiness
+
+| Bad column       | Good column   |
+| ---------------- | ------------- |
+| "foo"            | "foo"         |
+| "bar"            | "bar"         |
+| ""               | null          |
+
 
 ## Enums
 
