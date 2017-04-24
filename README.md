@@ -14,7 +14,8 @@
 
 ## General
 
-<a name="general--mix">
+<a name="general--mix"></a>
+
 - [1.1](#general--mix) **Mixed types**: Don't mix values of different types in one column. Restrict yourself to one type per column
 
     > Why? This way, you don't have to typecheck or cast when you consume the data.
