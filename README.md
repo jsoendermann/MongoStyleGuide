@@ -19,11 +19,11 @@
 
 - [1.1](#general--mix) **Mixed types**: Don't mix values of different types in one column.
 
-| <span style="color: red">Bad column</span> | <span style="color: green">Good column</span> |
-| ---------- | ----------- |
-| 1          | 1           |
-| "2"        | 2           |
-| { }        | 0           |
+| Bad column   | Good column |
+| ------------ | ----------- |
+| 1            | 1           |
+| "2"          | 2           |
+| { value: 3 } | 3           |
 
 - Don't mix types. **Do be conservative in what you write liberal in what you accept**
 - Don't use the empty string or 0 for their falsiness. **Do make non-casting, explicit comparisons**
