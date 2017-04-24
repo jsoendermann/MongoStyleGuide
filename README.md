@@ -159,7 +159,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 
     | :x: phoneNumber             | :white_check_mark: phoneNumber |
     | :---------------- | :----------------- |
-    | "020123123123"            | 20123123123    |
+    | 20123123            |  "020123123"   |
 
 ## Names
 
@@ -167,12 +167,12 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 
     > Why? It makes your data harder to read
 
-    :x: `apTime`
-    :white_check_mark: `appointmentTime`
-    :x: `ankleBrachialPressureIndexRight`
-    :white_check_mark: `ABIRight`
-    :x: `healthInformationSystemNumber`
-    :white_check_mark: `HISNumber`
+    - :x: `apTime`
+    - :white_check_mark: `appointmentTime`
+    - :x: `ankleBrachialPressureIndexRight`
+    - :white_check_mark: `ABIRight`
+    - :x: `healthInformationSystemNumber`
+    - :white_check_mark: `HISNumber`
 
 
 - [6.2](#names--case) **Case**: Use camelCase over snake_case
