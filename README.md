@@ -33,7 +33,7 @@
     | { value: "foo" } | { value: 43 }   |
     | { }              | { value: null } |
 
-- [1.3](#general--falsiness) **Falsiness**: Don't use the empty string or 0 for their falsiness
+- [1.3](#general--falsiness) **Falsiness**: Don't use `""` or `0` for their falsiness
 
     > Why? It's very easy to write buggy code otherwise which is also why you should not coerce to booleans in your if statements.
 
@@ -51,7 +51,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 - [2.1](#enumerations--modelling) **Modelling**: Always model your enums as uppercase string constants, e.g. "WAITING", "IN_PROGRESS" and "COMPLETED"
 
     > Why?
-    > 1. Favoring strings over booleans or numbers means your data is self-documenting. If your gender field contains the value 1, you don't know if that means male, female or something else
+    > 1. Favoring strings over booleans or numbers means your data is self-documenting. If your gender field contains the value `1`, you don't know if that means male, female or something else
     > 1. Using uppercase strings makes it easy to see at a glance whether something is an enum or a user-facing value
 
     | :x: gender              | :white_check_mark: gender |
@@ -63,11 +63,6 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | :---------------- | :----------------- |
     | "男"             | "MALE"              |
     | "女"             | "FEMALE"           |
-
-    | :x: gender              | :white_check_mark: gender |
-    | :---------------- | :----------------- |
-    | true             | "MALE"              |
-    | false             | "FEMALE"           |
 
 - [2.2](#enumerations--explicit) **Explicit states**: Don't use `null`, `undefined`, or any value except upper case string constants in your enums. This includes initial, undecided or unknown states
 
@@ -98,13 +93,15 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 
     > Why? So that it's impossible to save invalid data in your db like a car that's green and red simultaneously
 
-    :x: 
+    :x:
+
     | isRed              | isBlue | isGreen |
     | :---------------- | :----------------- | :----------------- |
     | false             | true              |  false              |
     | true             | false         | false         |
 
-    :white_check_mark: 
+    :white_check_mark:
+    
     | color |
     | :---------------- |
     | "BLUE"              |
