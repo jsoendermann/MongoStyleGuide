@@ -19,7 +19,7 @@
 
 - [1.1](#general--mix) **Mixed types**: Don't mix values of different types in one column. Restrict yourself to one type per column
 
-| Bad column   | Good column |
+| :x:          |:white_check_mark: |
 | ------------ | ----------- |
 | 1            | 1           |
 | "2"          | 2           |
