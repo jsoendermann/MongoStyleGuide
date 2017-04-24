@@ -48,17 +48,29 @@
 ## Enumerations
 <a name="enumerations"></a>
 
-An enumeration is a type that allows a limited number of values, e.g. "DOCTOR", "NURSE", "PATIENT" and "ADMINISTRATOR"
+An enumeration is a type that allows a limited number of values, e.g. a userType field that can contain the values "DOCTOR", "NURSE", "PATIENT" and "ADMINISTRATOR"
 
-- [2.1](#enumerations--modelling) **Modelling**: Always model 
+- [2.1](#enumerations--modelling) **Modelling**: Always model your enums as uppercase string constants, e.g. "WAITING", "IN_PROGRESS" and "COMPLETED"
 
-| :x:       | :white_check_mark:   |
-| :---------------- | :------------- |
-| "foo"            | "foo"         |
-| "bar"            | "bar"         |
-| ""               | null          |
+    > Why?
+    > 1. Favoring strings over booleans or numbers means your data is self-documenting. If your gender field contains the value 1, you don't know if that means male, female or something else
+    > 1. Using uppercase strings makes it easy to see at a glance whether something is an enum or a user-facing value
 
-- Don't use numbers, booleans or **any other types** to model **enumerations**. Do model them as uppercase string constants, e.g. "WAITING", "IN_PROGRESS" and "COMPLETED". 
+    | :x: gender              | :white_check_mark: gender |
+    | :---------------- | :----------------- |
+    | 0             | "MALE"              |
+    | 1             | "FEMALE"           |
+    
+    | :x: gender              | :white_check_mark: gender |
+    | :---------------- | :----------------- |
+    | "男"             | "MALE"              |
+    | "女"             | "FEMALE"           |
+    
+    | :x: gender              | :white_check_mark: gender |
+    | :---------------- | :----------------- |
+    | true             | "MALE"              |
+    | false             | "FEMALE"           |
+
 - Don't use null, undefined **or any other value or type** in your enum columns. Do give every state an **explicit enum value**, including **initial, undecided or unknown**
 - bad: 男女 good: male/female
 
