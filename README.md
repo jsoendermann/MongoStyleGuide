@@ -160,6 +160,12 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 
     > Why? It makes it hard to understand what the two values are supposed to represent
 
+    | :x: height            | :white_check_mark: height |
+    | :---------------- | :----------------- |
+    | 178             | 178   |
+    | null             | null          |
+    | *missing*             | null           |
+
 ## Other types
 
 <a name="other-types--numbers-as-strings"></a>
