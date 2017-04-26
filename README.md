@@ -26,7 +26,7 @@
     | { value: 3 }  | 3                 |
 
 <a name="general--object-schema"></a>
-- [1.2](#general--object-schema) **Object columns**: If you have a column that contains objects, make sure all objects share the same format
+- [1.2](#general--object-schema) **Object columns**: If you have a column or array that contains objects, make sure all objects share the same schema
 
     | :x:       | :white_check_mark:     |
     | :---------------- | :------------- |
@@ -155,8 +155,36 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | [ "First", "Great post!" ]             | [ "First", "Great post!" ]    |
     | null             | []           |
 
+<a name="null-and-undefined--primitive-types"></a>
+- [5.3](#null-and-undefined--primitive-types) **Primitive types**: In columns that contain primitive types (booleans, numbers or strings) or Date objects, use `null` to express absent values.
+
+    | :x:            | :white_check_mark: |
+    | :---------------- | :----------------- |
+    | 1             | 1   |
+    | 2             | 2          |
+    | *missing*             | null           |
+
+<a name="null-and-undefined--objects-and-arrays"></a>
+- [5.3](#null-and-undefined--objects-and-arrays) **Complex types**: To express the absence of a value in columns that contain objects or arrays, add another column that controls whether your array or object is present. If it isn't, it should be undefined.
+
+    :x:
+
+    | productType              | chapterTitles |
+    | :---------------- | :----------------- |
+    | 'BOOK'             | ['1 Get Started', '2 The End'] |
+    | 'CAR'             | []         |
+    | 'CAR'             | null         |
+
+    :white_check_mark:
+
+    | productType              | chapterTitles |
+    | :---------------- | :----------------- |
+    | 'BOOK'             | ['1 Get Started', '2 The End'] |
+    | 'CAR'             | *missing*        |
+    | 'CAR'             | *missing*         |
+
 <a name="null-and-undefined--dont-mix"></a>
-- [5.3](#null-and-undefined--dont-mix) **Don't mix the two**: Don't mix `null` and `undefined` in the same column
+- [5.4](#null-and-undefined--dont-mix) **Don't mix the two**: Don't mix `null` and `undefined` in the same column
 
     > Why? It makes it hard to understand what the two values are supposed to represent
 
@@ -181,6 +209,16 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | :x: phoneNumber             | :white_check_mark: phoneNumber |
     | :---------------- | :----------------- |
     | 20123123            |  "020123123"   |
+
+<a name="other-types--sets"></a>
+- [6.2](#other-types--sets) **Sets**: If you have a set containing a known, finite number of elements, model it as an object with the elements of the set being the keys and the values being `true` or `false` to indicate membership. Make sure no key is missing.
+
+    > Why? Using objects over arrays enforces distinctiveness
+
+    | :x:              | :white_check_mark:  |
+    | :---------------- | :----------------- |
+    | ['a', 'b']             | { a: true, b: true, c: false}           |
+    | { a: true }             | { a: true, b: false, c: false}           |
 
 ## Names
 
@@ -210,11 +248,14 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 <a name="object-modelling--growth"></a>
 - [8.1](#object-modelling--growth) **Growth**: Don't let your objects keep growing. Prune and merge properties into nested objects where appropriate (e.g. by combining "footAssessmentState", "eyeAssessmentState" and "nutritionAssessmentState" into a nested "assessmentStates" object with properties "foot", "eye" and "nutrition")
 
+    > Why? TODO
+
 <a name="object-modelling--excessive-nesting"></a>
 - [8.2](#object-modelling--excessive-nesting) **Nesting**: Don't excessively nest objects. Do consider breaking up your data if you find yourself needing deeply nested objects
 
+    > Why? TODO
+
 ## Todo
 
-- Prefer null over undefined/missing?
 - Normalization/denormalization
 - ObjectIds
