@@ -165,7 +165,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | *missing*             | null           |
 
 <a name="null-and-undefined--objects-and-arrays"></a>
-- [5.3](#null-and-undefined--objects-and-arrays) **Complex types**: To express the absence of a value in columns that contain objects or arrays, add another column that controls whether your array or object is present. If it isn't, it should be undefined.
+- [5.4](#null-and-undefined--objects-and-arrays) **Complex types**: To express the absence of a value in columns that contain objects or arrays, add another column that controls whether your array or object is present. If it isn't, it should be undefined.
 
     :x:
 
@@ -184,7 +184,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | 'CAR'             | *missing*         |
 
 <a name="null-and-undefined--dont-mix"></a>
-- [5.4](#null-and-undefined--dont-mix) **Don't mix the two**: Don't mix `null` and `undefined` in the same column
+- [5.5](#null-and-undefined--dont-mix) **Don't mix the two**: Don't mix `null` and `undefined` in the same column
 
     > Why? It makes it hard to understand what the two values are supposed to represent
 
