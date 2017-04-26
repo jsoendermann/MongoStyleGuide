@@ -15,7 +15,7 @@
 ## General
 
 <a name="general--no-surprises"></a>
-- [1.1](#general--no-surprises) **Avoid surprises**: The goal you should be striving for when creating a new schema is to be as least surprising as you can. The rules in this style guide are written with this goal in mind. If there is a trade off between ease of creating data and ease of consuming it, choose the latter.
+- [1.1](#general--no-surprises) **Avoid surprises**: The goal you should be striving for when creating a new schema is to [be as least surprising as you can](https://en.m.wikipedia.org/wiki/Principle_of_least_astonishment). The rules in this style guide are written with this goal in mind. If there is a trade off between ease of creating data and ease of consuming it, choose the latter.
 
     > Why? Under normal circumstances, code that reads your data will be much more common than code that writes it. In addition, code that consumes your schema is more likely to be written by other people.
 
