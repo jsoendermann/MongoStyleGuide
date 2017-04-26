@@ -14,8 +14,13 @@
 
 ## General
 
+<a name="general--no-surprises"></a>
+- [1.1](#general--no-surprises) **Avoid surprises**: The goal you should be striving for when creating a new schema is to be as least surprising as you can. The rules in this style guide are written with this goal in mind.
+
+    > Why? Under normal circumstances, code that reads your data will be much more common than code that writes it. In addition, code that consumes your schema is more likely to be written by other people.
+
 <a name="general--mix"></a>
-- [1.1](#general--mix) **Mixed types**: Don't mix values of different types in one column. Restrict yourself to one type per column
+- [1.2](#general--mix) **Mixed types**: Don't mix values of different types in one column. Restrict yourself to one type per column
 
     > Why? So you don't have to typecheck or cast when you consume the data.
 
@@ -26,7 +31,7 @@
     | { value: 3 }  | 3                 |
 
 <a name="general--object-schema"></a>
-- [1.2](#general--object-schema) **Object columns**: If you have a column or array that contains objects, make sure all objects share the same schema
+- [1.3](#general--object-schema) **Object columns**: If you have a column or array that contains objects, make sure all objects share the same schema
 
     | :x:       | :white_check_mark:     |
     | :---------------- | :------------- |
@@ -35,7 +40,7 @@
     | { }              | { value: null } |
 
 <a name="general--falsiness"></a>
-- [1.3](#general--falsiness) **Falsiness**: Don't use `""` or `0` for their falsiness
+- [1.4](#general--falsiness) **Falsiness**: Don't use `""` or `0` for their falsiness
 
     > Why? It's very easy to write buggy code otherwise
 
