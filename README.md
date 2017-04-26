@@ -248,12 +248,8 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 <a name="object-modelling--growth"></a>
 - [8.1](#object-modelling--growth) **Growth**: Don't let your objects keep growing. Prune and merge properties into nested objects where appropriate (e.g. by combining "footAssessmentState", "eyeAssessmentState" and "nutritionAssessmentState" into a nested "assessmentStates" object with properties "foot", "eye" and "nutrition")
 
-    > Why? TODO
-
 <a name="object-modelling--excessive-nesting"></a>
 - [8.2](#object-modelling--excessive-nesting) **Nesting**: Don't excessively nest objects. Do consider breaking up your data if you find yourself needing deeply nested objects
-
-    > Why? TODO
 
 ## Todo
 
