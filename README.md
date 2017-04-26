@@ -211,14 +211,14 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | 20123123            |  "020123123"   |
 
 <a name="other-types--sets"></a>
-- [6.2](#other-types--sets) **Sets**: If you have a set containing a known, finite number of elements, model it as an object with the elements of the set being the keys and the values being `true` or `false` to indicate membership. Make sure no key is missing.
+- [6.2](#other-types--sets) **Sets**: If you have a set containing a known, finite number of elements, model it as an object. The keys of the object should be uppercase strings representing the elements of your set. The values of the object should booleans that indicate membership. Make sure no key is missing.
 
     > Why? Using objects over arrays enforces distinctiveness
 
     | :x:              | :white_check_mark:  |
     | :---------------- | :----------------- |
-    | ['a', 'b']             | { a: true, b: true, c: false}           |
-    | { a: true }             | { a: true, b: false, c: false}           |
+    | ['外公', '外婆', '爷爷']             | { WAIGONG: true, WAIPO: true, YEYE: true, NAINAI: false }           |
+    | { WAIGONG: true }             | { WAIGONG: true, WAIPO: false, YEYE: false, NAINAI: false }           |
 
 ## Names
 
