@@ -201,8 +201,8 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | null             | null          |
     | *missing*             | null           |
 
-<a name="null-and-undefined--multiple-absent-states"></a>
-- [5.6](#null-and-undefined--multiple-absent-states) **Multiple missing value states**: If you need two ways to represent the absence of a value, convert the value to an object with `state` and `value` keys.
+<a name="null-and-undefined--multiple-missing-value-states"></a>
+- [5.6](#null-and-undefined--multiple-missing-value-states) **Multiple missing value states**: If you need two ways to represent the absence of a value, convert the value to an object with `state` and `value` keys.
 
     :white_check_mark:
 
