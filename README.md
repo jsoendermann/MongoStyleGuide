@@ -211,6 +211,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | null                            |
     | *missing*                       |
     | 97                              |
+    | ''                              |
 
     :white_check_mark:
 
