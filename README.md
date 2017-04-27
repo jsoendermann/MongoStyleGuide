@@ -218,6 +218,8 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 <a name="other-types--sets"></a>
 - [6.2](#other-types--sets) **Sets**: Model sets as arrays containing uppercase string constants. Use JavaScript's `Set` class where appropriate.
 
+    > Why? You can look at sets as multi-valued enumerations
+
     | :x:              | :white_check_mark:  |
     | :---------------- | :----------------- |
     | ['海豚', '鸽子', '蜜蜂']             | ['DOLPHIN', 'PIGEON', 'BEE']          |
