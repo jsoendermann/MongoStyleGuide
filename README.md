@@ -19,6 +19,8 @@
 
     > Why? Under normal circumstances, code that reads your data will be much more common than code that writes it. In addition, code that consumes your schema is more likely to be written by other people.
 
+Ideally, two people modelling the same data should produce the same schema modulo names.
+
 <a name="general--mix"></a>
 - [1.2](#general--mix) **Mixed types**: Don't mix values of different types in one column. Restrict yourself to one type per column
 
@@ -198,6 +200,17 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | 178             | 178   |
     | null             | null          |
     | *missing*             | null           |
+
+<a name="null-and-undefined--multiple-absent-states"></a>
+- [5.6](#null-and-undefined--multiple-absent-states) **Multiple missing value states**: If you need two ways to represent the absence of a value, convert the value to an object with `state` and `value` keys.
+
+    :white_check_mark:
+
+    | height                          |
+    | :------------------------------ |
+    | { state: 'NOT_APPLICABLE' }     |
+    | { state: 'USER_DOES_NOT_TELL' } |
+    | { state: 'SET', value: 189 }    |
 
 ## Other types
 
