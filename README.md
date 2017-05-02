@@ -21,37 +21,11 @@
 
 Ideally, two people modelling the same data should produce the same schema modulo names.
 
-<a name='general--mix'></a>
-- [1.2](#general--mix) **Mixed types**: Don't mix values of different types in one column. Restrict yourself to one type per column
 
-    > Why? So you don't have to typecheck or cast when you consume the data.
+<a name='general--priorities'></a>
+- [1.2](#general--priorities) **Priorities**: There are several dimensions that will impact your database design such as hard disk space, read/write speed and ease of development. Spend some time thinking about which ones are important in your case. Then come to the conclusion that ease of development is the only thing that matters because you're not Google.
 
-    | :x:           |:white_check_mark: |
-    | :------------ | :---------------- |
-    | 1             | 1                 |
-    | '2'           | 2                 |
-    | { value: 3 }  | 3                 |
-
-<a name='general--object-schema'></a>
-- [1.3](#general--object-schema) **Object columns**: If you have a column or array that contains objects, make sure all objects share the same schema
-
-    | :x:       | :white_check_mark:     |
-    | :---------------- | :------------- |
-    | { value: 42 }    | { value: 42 }   |
-    | { otherValue: 'foo' } | { value: 43 }   |
-    | { }              | { value: null } |
-
-<a name='general--falsiness'></a>
-- [1.4](#general--falsiness) **Falsiness**: Don't use `''` or `0` for their falsiness
-
-    > Why? It's very easy to write buggy code otherwise
-
-    | :x: height      | :white_check_mark: height  |
-    | :---------------- | :------------- |
-    | 182            | 182         |
-    | 167            | 167         |
-    | 0               | null          |
-
+    > Why? It's easy to fall into the trap of wasting time designing "at scale". This makes it less likely that you will ever get to a point where these problems become real.
 
 ## Enumerations
 
@@ -223,8 +197,39 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 
 ## Other types
 
+<a name='other-types--mix'></a>
+- [6.1](#other-types--mix) **Mixed types**: Don't mix values of different types in one column. Restrict yourself to one type per column
+
+    > Why? So you don't have to typecheck or cast when you consume the data.
+
+    | :x:           |:white_check_mark: |
+    | :------------ | :---------------- |
+    | 1             | 1                 |
+    | '2'           | 2                 |
+    | { value: 3 }  | 3                 |
+
+<a name='other-types--object-schema'></a>
+- [6.2](#other-types--object-schema) **Object columns**: If you have a column or array that contains objects, make sure all objects share the same schema
+
+    | :x:       | :white_check_mark:     |
+    | :---------------- | :------------- |
+    | { value: 42 }    | { value: 42 }   |
+    | { otherValue: 'foo' } | { value: 43 }   |
+    | { }              | { value: null } |
+
+<a name='other-types--falsiness'></a>
+- [6.3](#other-types--falsiness) **Falsiness**: Don't use `''` or `0` for their falsiness
+
+    > Why? It's very easy to write buggy code otherwise
+
+    | :x: height      | :white_check_mark: height  |
+    | :---------------- | :------------- |
+    | 182            | 182         |
+    | 167            | 167         |
+    | 0               | null          |
+
 <a name='other-types--numbers-as-strings'></a>
-- [6.1](#other-types--numbers-as-strings) **Numbers as strings**: Don't save numbers as strings except when saving data like phone numbers or ID numbers for which leading zeroes are significant
+- [6.4](#other-types--numbers-as-strings) **Numbers as strings**: Don't save numbers as strings except when saving data like phone numbers or ID numbers for which leading zeroes are significant
 
     > Why? It means you don't have to cast when performing arithmetic
 
@@ -238,7 +243,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | 20123123            |  '020123123'   |
 
 <a name='other-types--sets'></a>
-- [6.2](#other-types--sets) **Sets**: Model sets as arrays containing uppercase string constants. Use JavaScript's `Set` class where appropriate.
+- [6.5](#other-types--sets) **Sets**: Model sets as arrays containing uppercase string constants. Use JavaScript's `Set` class where appropriate.
 
     > Why? You can look at sets as multi-valued enumerations
 
@@ -283,3 +288,9 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 - Normalization/denormalization
 - ObjectIds
 - Migrations
+- Units
+weight: 50
+weightInKg: 50
+weight: { unit: 'kg', value: 50 }
+
+- foot assessment radio+check box, optional nullable
