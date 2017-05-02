@@ -38,15 +38,10 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     > 1. Favoring strings over booleans or numbers means your data is self-documenting. If your gender field contains the value `1`, you don't know if that means male, female or something else
     > 1. Using uppercase strings makes it easy to see at a glance whether something is an enum or a user-facing value
 
-    | :x: gender              | :white_check_mark: gender |
-    | :---------------- | :----------------- |
-    | 0             | 'MALE'              |
-    | 1             | 'FEMALE'           |
-
-    | :x: gender              | :white_check_mark: gender |
-    | :---------------- | :----------------- |
-    | '男'             | 'MALE'              |
-    | '女'             | 'FEMALE'           |
+    | :x: gender        | :x: gender              | :white_check_mark: gender |
+    | :---------------- | :---------------- | :----------------- |
+    | 0                 | '男'             | 'MALE'              |
+    | 1                 | '女'             | 'FEMALE'           |
 
 <a name='enumerations--explicit'></a>
 - [2.2](#enumerations--explicit) **Explicit states**: Don't use `null`, `undefined`, or any value except upper case string constants in your enums. This includes initial, undecided or unknown states
