@@ -17,9 +17,7 @@
 <a name='general--no-surprises'></a>
 - [1.1](#general--no-surprises) **Avoid surprises**: The goal you should be striving for when creating a new schema is to [be as least surprising as you can](https://en.m.wikipedia.org/wiki/Principle_of_least_astonishment). The rules in this style guide are written with this goal in mind. If there is a trade off between ease of creating data and ease of consuming it, choose the latter.
 
-    > Why? Under normal circumstances, code that reads your data will be much more common than code that writes it. In addition, code that consumes your schema is more likely to be written by other people.
-
-Ideally, two people modelling the same data should produce the same schema modulo names.
+    > Why? Under normal circumstances, code that reads your data will be much more common than code that writes it. Also, code that consumes your schema is more likely to be written by other people.
 
 
 <a name='general--priorities'></a>
@@ -35,18 +33,18 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 - [2.1](#enumerations--modelling) **Modelling**: Always model your enums as uppercase string constants, e.g. `'WAITING'`, `'IN_PROGRESS'` and `'COMPLETED'`
 
     > Why?
-    > 1. Favoring strings over booleans or numbers means your data is self-documenting. If your gender field contains the value `1`, you don't know if that means male, female or something else
-    > 1. Using uppercase strings makes it easy to see at a glance whether something is an enum or a user-facing value
+    > 1. Favoring strings over booleans or numbers means your data is self-documenting. If your gender field contains the value `1`, you don't know if that means male, female or something else.
+    > 1. Using uppercase strings makes it easy to see at a glance whether something is an enum or a user-facing value.
 
     | :x: gender        | :x: gender              | :white_check_mark: gender |
     | :---------------- | :---------------- | :----------------- |
-    | 0                 | '男'             | 'MALE'              |
-    | 1                 | '女'             | 'FEMALE'           |
+    | 0                 | 'Male'            | 'MALE'              |
+    | 1                 | 'Female'          | 'FEMALE'           |
 
 <a name='enumerations--explicit'></a>
 - [2.2](#enumerations--explicit) **Explicit states**: Don't use `null`, `undefined`, or any value except upper case string constants in your enums. This includes initial, undecided or unknown states
 
-    > Why? This makes the meaning explicit. If you have an assessmentState field that's set to `null`, you can't tell whether that means 'no assessment necessary', 'not applicable', 'patient didn't show up', 'undecided' or any other possible state
+    > Why? This makes the meaning explicit. If you have an assessmentState field that's set to `null`, you can't tell whether that means 'no assessment necessary', 'not applicable', 'patient didn't show up', 'undecided' or any other possible state.
 
     | :x: assessmentState | :white_check_mark: assessmentState |
     | :------------------ | :--------------------------------- |
@@ -60,13 +58,13 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 - [3.1](#booleans--booleans-and-enums) **Booleans and enums**: Don't model things as booleans that have no natural correspondence to true/false, even if they only have two possible states. Use enums instead
 
     > Why?
-    > 1. Booleans can not be extended beyond two possible values but the field might have to change later to include additional values, e.g. a boolean field 'hasArrived' could not be extended later to include the possibility of cancelled appointments
-    > 1. It makes meaning explicit. If your gender field contains the value `true`, you can't tell if that means male or female
+    > 1. Booleans can not be extended beyond two possible values but the field might have to change later to include additional values, e.g. a boolean field 'hasArrived' could not be extended later to include the possibility of cancelled appointments.
+    > 1. It makes meaning explicit. If your gender field contains the value `true`, you can't tell if that means male or female.
 
     | :x: gender              | :white_check_mark: gender |
     | :---------------- | :----------------- |
-    | false             | 'MALE'              |
-    | true             | 'FEMALE'           |
+    | false             | 'MALE'             |
+    | true              | 'FEMALE'           |
 
 <a name='booleans--prefix'></a>
 - [3.2](#booleans--prefix) **Prefix**: Model things as booleans that are prefixed with verbs such as 'is...' or 'has...' (e.g. 'isDoctor', 'didAnswerPhoneCall' or 'hasDiabetes')
@@ -74,26 +72,26 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 <a name='booleans--orthogonal'></a>
 - [3.3](#booleans--orthogonal) **Orthogonality**: If you have several mutually exclusive boolean fields in your collection, merge them into an enum
 
-    > Why? So that it's impossible to save invalid data in your db like a car that's green and red simultaneously
+    > Why? So that it's impossible to save invalid data in your db like a car that's green and red simultaneously.
 
     :x:
 
-    | isRed              | isBlue | isGreen |
+    | isRed             | isBlue             | isGreen            |
     | :---------------- | :----------------- | :----------------- |
-    | false             | true              |  false              |
-    | true             | false         | false         |
+    | false             | true               |  false             |
+    | true              | false              | false              |
 
     :white_check_mark:
 
-    | color |
+    | color             |
     | :---------------- |
-    | 'BLUE'              |
-    | 'RED'         |
+    | 'BLUE'            |
+    | 'RED'             |
 
 ## Dates
 
 <a name='dates--iso-strings'></a>
-- [4.1](#dates--iso-strings) **ISO strings**: Make sure you never save dates as ISO strings like `'2017-04-14T06:41:21.616Z'`
+- [4.1](#dates--iso-strings) **ISO strings**: Make sure you never save dates as ISO strings like `'2017-04-14T06:41:21.616Z'`. This can easily happen as a result of JSON deserialization.
 
     | :x:              | :white_check_mark: |
     | :---------------- | :----------------- |
@@ -101,9 +99,9 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 
     
 <a name='dates--day-strings'></a>
-- [4.2](#dates--day-strings) **Day strings**: Don't use Date when all you are concerned with is a timezone independent day value. Instead, use strings of the form 'YYYY-MM-DD'
+- [4.2](#dates--day-strings) **Day strings**: Don't use Date when all you are concerned with is a timezoneless day. Instead, use strings of the form 'YYYY-MM-DD'
 
-    > Why? It makes it very easy to check whether a day falls on a certain day and it keeps your database clean
+    > Why? It makes it much easier to check whether a day falls on a certain day.
 
     | :x: dateOfBirth             | :white_check_mark: dateOfBirth |
     | :---------------- | :----------------- |
@@ -117,7 +115,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     > Why? It breaks expectations and makes it impossible to interpret the data by looking at it.
 
 <a name='null-and-undefined--sensible-default'></a>
-- [5.2](#null-and-undefined--sensible-default) **Default**: Don't use null or undefined when there is a sensible default value like `0`, `''` or `[]`
+- [5.2](#null-and-undefined--sensible-default) **Default**: Don't use null or undefined when there is a sensible default value like `0`, `''` or `[]`.
 
     > Why? It keeps your types pure
 
@@ -128,7 +126,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 
     | :x: comments             | :white_check_mark: comments |
     | :---------------- | :----------------- |
-    | [ 'First', 'Great post!' ]             | [ 'First', 'Great post!' ]    |
+    | [ 'First!', 'Great post!' ]             | [ 'First!', 'Great post!' ]    |
     | null             | []           |
 
 <a name='null-and-undefined--primitive-types'></a>
@@ -160,9 +158,9 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | 'CAR'             | *missing*         |
 
 <a name='null-and-undefined--dont-mix'></a>
-- [5.5](#null-and-undefined--dont-mix) **Don't mix the two**: Don't mix `null` and `undefined` in the same column
+- [5.5](#null-and-undefined--dont-mix) **Don't mix the two**: Don't mix `null` and `undefined` in the same column.
 
-    > Why? It makes it hard to understand what the two values are supposed to represent
+    > Why? It makes it hard to understand what the two values are supposed to represent.
 
     | :x: height            | :white_check_mark: height |
     | :---------------- | :----------------- |
@@ -193,7 +191,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 ## Other types
 
 <a name='other-types--mix'></a>
-- [6.1](#other-types--mix) **Mixed types**: Don't mix values of different types in one column. Restrict yourself to one type per column
+- [6.1](#other-types--mix) **Mixed types**: Don't mix values of different types in one column. Restrict yourself to one type per column.
 
     > Why? So you don't have to typecheck or cast when you consume the data.
 
@@ -204,7 +202,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | { value: 3 }  | 3                 |
 
 <a name='other-types--object-schema'></a>
-- [6.2](#other-types--object-schema) **Object columns**: If you have a column or array that contains objects, make sure all objects share the same schema
+- [6.2](#other-types--object-schema) **Object columns**: If you have a column or array that contains objects, make sure all objects share the same schema.
 
     | :x:       | :white_check_mark:     |
     | :---------------- | :------------- |
@@ -213,9 +211,9 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | { }              | { value: null } |
 
 <a name='other-types--falsiness'></a>
-- [6.3](#other-types--falsiness) **Falsiness**: Don't use `''` or `0` for their falsiness
+- [6.3](#other-types--falsiness) **Falsiness**: Don't use `''` or `0` for their falsiness.
 
-    > Why? It's very easy to write buggy code otherwise
+    > Why? It makes it very easy to write buggy code.
 
     | :x: height      | :white_check_mark: height  |
     | :---------------- | :------------- |
@@ -224,9 +222,9 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | 0               | null          |
 
 <a name='other-types--numbers-as-strings'></a>
-- [6.4](#other-types--numbers-as-strings) **Numbers as strings**: Don't save numbers as strings except when saving data like phone numbers or ID numbers for which leading zeroes are significant
+- [6.4](#other-types--numbers-as-strings) **Numbers as strings**: Don't save numbers as strings except when saving data like phone numbers or ID numbers for which leading zeroes are significant and for which arithmetic operations don't make sense.
 
-    > Why? It means you don't have to cast when performing arithmetic
+    > Why? It means you don't have to cast when performing arithmetic.
 
     | :x: height             | :white_check_mark: height |
     | :---------------- | :----------------- |
@@ -237,35 +235,46 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | :---------------- | :----------------- |
     | 20123123            |  '020123123'   |
 
-<a name='other-types--sets'></a>
-- [6.5](#other-types--sets) **Sets**: Model sets as arrays containing uppercase string constants. Use JavaScript's `Set` class where appropriate.
+<a name='other-types--numbers-with-unit'></a>
+- [6.5](#other-types--numbers-with-unit) **Units**: If you really need to include units with your numbers (think about whether you do, can't you convert and save them in metric?), save them as objects with a `unit` and a `value` field.
 
-    > Why? You can look at sets as multi-valued enumerations
+    > Why? It makes it possible to perform comparisons and arithmetic operations on your values.
+
+    | :x:              | :white_check_mark:  |
+    | :--------------- | :----------------- |
+    | '10 kg'          | { unit: 'KG', value: 10 }          |
+    | '20 stones'      | { unit: 'STONES', value: 20 }          |
+
+<a name='other-types--sets'></a>
+- [6.6](#other-types--sets) **Sets**: Model sets as arrays containing uppercase string constants. Use JavaScript's `Set` class where appropriate.
+
+    > Why? You can look at sets as multi-valued enumerations.
 
     | :x:              | :white_check_mark:  |
     | :---------------- | :----------------- |
-    | ['海豚', '鸽子', '蜜蜂']             | ['DOLPHIN', 'PIGEON', 'BEE']          |
+    | ['Dolphin', 'Pigeon', 'Bee']             | ['DOLPHIN', 'PIGEON', 'BEE']          |
     | { DOLPHIN: true, PIGEON: false, BEE: false }             | ['DOLPHIN']           |
 
 ## Names
 
 <a name='names--abbreviations'></a>
-- [7.1](#names--abbreviations) **Abbreviations**: Don't use abbreviations except for domain specific language. When you do abbreviate, capitalize
+- [7.1](#names--abbreviations) **Abbreviations**: Don't use abbreviations except for domain specific language. When you do abbreviate, capitalize properly.
 
-    > Why? It makes your data harder to read
+    > Why? It makes your data and code hard to read.
 
     - :x: `apTime`
     - :white_check_mark: `appointmentTime`
     - :x: `ankleBrachialPressureIndexRight`
     - :white_check_mark: `ABIRight`
     - :x: `healthInformationSystemNumber`
+    - :x: `hisNumber`
     - :white_check_mark: `HISNumber`
 
 
 <a name='names--key-names'></a>
-- [7.2](#names--key-names) **Case**: Use camelCase over snake_case for key names
+- [7.2](#names--key-names) **Case**: Use camelCase over snake_case for key names.
 
-    > Why? It's what we use in JavaScript which means we don't have to mix the two in our code
+    > Why? It's what we use in JavaScript which means we don't have to convert or mix the two in our code.
 
 <a name='names--collection-names'></a>
 - [7.3](#names--collection-names) **Collection names**: Collection names should be pluralized and in camelCase. Use dots when there is a relationship between collections (e.g. `user` and `user.appointments`)
@@ -276,16 +285,10 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 - [8.1](#object-modelling--growth) **Growth**: Don't let your objects keep growing. Prune and merge properties into nested objects where appropriate (e.g. by combining 'footAssessmentState', 'eyeAssessmentState' and 'nutritionAssessmentState' into a nested 'assessmentStates' object with properties 'foot', 'eye' and 'nutrition')
 
 <a name='object-modelling--excessive-nesting'></a>
-- [8.2](#object-modelling--excessive-nesting) **Nesting**: Don't excessively nest objects. Do consider breaking up your data if you find yourself needing deeply nested objects
+- [8.2](#object-modelling--excessive-nesting) **Nesting**: Don't excessively nest objects. Consider breaking up your data if you find yourself needing deeply nested objects
 
-## Todo
+## Todo (pull requests welcome)
 
 - Normalization/denormalization
 - ObjectIds
 - Migrations
-- Units
-weight: 50
-weightInKg: 50
-weight: { unit: 'kg', value: 50 }
-
-- foot assessment radio+check box, optional nullable
