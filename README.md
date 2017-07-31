@@ -15,36 +15,36 @@
 ## General
 
 <a name='general--no-surprises'></a>
-- [1.1](#general--no-surprises) **Avoid surprises**: The goal you should be striving for when creating a new schema is to [be as least surprising as you can](https://en.m.wikipedia.org/wiki/Principle_of_least_astonishment). The rules in this style guide are written with this goal in mind. If there is a trade off between ease of creating data and ease of consuming it, choose the latter.
+- [1.1](#general--no-surprises) **Avoid surprises**: Your goal when creating a new schema should be to [be as least surprising as you can](https://en.m.wikipedia.org/wiki/Principle_of_least_astonishment). The rules in this style guide are written with this in mind. If there is a trade off between ease of creating data and ease of understanding its structure, choose the latter.
 
-    > Why? Under normal circumstances, code that reads your data will be much more common than code that writes it. Also, code that consumes your schema is more likely to be written by other people.
+    > Why? Having others be able to understand your data is usually more important than making your code slightly more convenient.
 
 
 <a name='general--priorities'></a>
-- [1.2](#general--priorities) **Priorities**: There are several dimensions that will impact your database design such as hard disk space, read/write speed and ease of development. Spend some time thinking about which ones are important in your case. Then come to the conclusion that ease of development is the only thing that matters because you're not Google.
+- [1.2](#general--priorities) **Priorities**: There are several dimensions that will impact your database design, such as used hard disk space, read/write speed and ease of development. Spend some time thinking about which ones are important in your case. Then come to the conclusion that ease of development is the only thing that matters because you're not Google.
 
-    > Why? It's easy to fall into the trap of wasting time designing "at scale". This makes it less likely that you will ever get to a point where these problems become real.
+    > Why? It's easy to fall into the trap of wasting time making things scale from the start. This makes it less likely that you will ever get to a point where these problems become real.
 
 ## Enumerations
 
-An enumeration is a type that allows a limited number of values, e.g. a userType field that can contain the values `'DOCTOR'`, `'NURSE'`, `'PATIENT'` and `'ADMINISTRATOR'`
+An enumeration is a type that allows a limited number of values, e.g. a `role` field that can contain the values `'DOCTOR'`, `'NURSE'`, `'PATIENT'` and `'ADMINISTRATOR'`.
 
 <a name='enumerations--modelling'></a>
-- [2.1](#enumerations--modelling) **Modelling**: Always model your enums as uppercase string constants, e.g. `'WAITING'`, `'IN_PROGRESS'` and `'COMPLETED'`
+- [2.1](#enumerations--modelling) **Modelling**: Always model your enums as uppercase string constants, e.g. `'WAITING'`, `'IN_PROGRESS'` and `'COMPLETED'`.
 
     > Why?
-    > 1. Favoring strings over booleans or numbers means your data is self-documenting. If your gender field contains the value `1`, you don't know if that means male, female or something else.
+    > 1. Favoring strings over booleans or numbers means your data is self-documenting. If your `gender` field contains the value `1`, you don't know if that means male, female or something else.
     > 1. Using uppercase strings makes it easy to see at a glance whether something is an enum or a user-facing value.
 
-    | :x: gender        | :x: gender              | :white_check_mark: gender |
+    | :x: gender        | :x: gender        | :white_check_mark: gender |
     | :---------------- | :---------------- | :----------------- |
-    | 0                 | 'Male'            | 'MALE'              |
+    | 0                 | 'Male'            | 'MALE'             |
     | 1                 | 'Female'          | 'FEMALE'           |
 
 <a name='enumerations--explicit'></a>
-- [2.2](#enumerations--explicit) **Explicit states**: Don't use `null`, `undefined`, or any value except upper case string constants in your enums. This includes initial, undecided or unknown states
+- [2.2](#enumerations--explicit) **Explicit states**: Don't use `null`, `undefined`, or any value except upper case string constants in your enums. This includes initial, undecided or unknown states.
 
-    > Why? This makes the meaning explicit. If you have an assessmentState field that's set to `null`, you can't tell whether that means 'no assessment necessary', 'not applicable', 'patient didn't show up', 'undecided' or any other possible state.
+    > Why? It makes meaning explicit. If you have an assessmentState field that's set to `null`, you don't know whether that means 'no assessment necessary', 'not applicable', 'patient didn't show up', 'undecided' or any other possible state.
 
     | :x: assessmentState | :white_check_mark: assessmentState |
     | :------------------ | :--------------------------------- |
@@ -55,11 +55,10 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 ## Booleans
 
 <a name='booleans--booleans-and-enums'></a>
-- [3.1](#booleans--booleans-and-enums) **Booleans and enums**: Don't model things as booleans that have no natural correspondence to true/false, even if they only have two possible states. Use enums instead
+- [3.1](#booleans--booleans-and-enums) **Booleans and enums**: Don't model things as booleans that have no natural correspondence to true/false, even if they only have two possible states. Use enums instead.
 
     > Why?
-    > 1. Booleans can not be extended beyond two possible values but the field might have to change later to include additional values, e.g. a boolean field 'hasArrived' could not be extended later to include the possibility of cancelled appointments.
-    > 1. It makes meaning explicit. If your gender field contains the value `true`, you can't tell if that means male or female.
+    > 1. Booleans can not be extended beyond two possible values, e.g. a boolean field 'hasArrived' could not be changed later to include the possibility of cancelled appointments.
 
     | :x: gender              | :white_check_mark: gender |
     | :---------------- | :----------------- |
@@ -67,12 +66,12 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | true              | 'FEMALE'           |
 
 <a name='booleans--prefix'></a>
-- [3.2](#booleans--prefix) **Prefix**: Model things as booleans that are prefixed with verbs such as 'is...' or 'has...' (e.g. 'isDoctor', 'didAnswerPhoneCall' or 'hasDiabetes')
+- [3.2](#booleans--prefix) **Prefix**: Prefix your boolean field names with verbs such as 'is...' or 'has...' (e.g. 'isDoctor', 'didAnswerPhoneCall' or 'hasDiabetes').
 
 <a name='booleans--orthogonal'></a>
-- [3.3](#booleans--orthogonal) **Orthogonality**: If you have several mutually exclusive boolean fields in your collection, merge them into an enum
+- [3.3](#booleans--orthogonal) **Orthogonality**: If you have several mutually exclusive boolean fields in your collection, merge them into an enum.
 
-    > Why? So that it's impossible to save invalid data in your db like a car that's green and red simultaneously.
+    > Why? So that it's impossible to save invalid data in your db, like a car that's green and red simultaneously.
 
     :x:
 
@@ -99,9 +98,9 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 
     
 <a name='dates--day-strings'></a>
-- [4.2](#dates--day-strings) **Day strings**: Don't use Date when all you are concerned with is a timezoneless day. Instead, use strings of the form 'YYYY-MM-DD'
+- [4.2](#dates--day-strings) **Day strings**: Don't use the Date type when all you are concerned with is the day component. Instead, use strings of the form 'YYYY-MM-DD'
 
-    > Why? It makes it much easier to check whether a day falls on a certain day.
+    > Why? It makes common operations much easier, like checking whether a date falls on a certain day or getting all the documents that fall on a certain day.
 
     | :x: dateOfBirth             | :white_check_mark: dateOfBirth |
     | :---------------- | :----------------- |
@@ -110,7 +109,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 ## Null and undefined
 
 <a name='null-and-undefined--no-overloading'></a>
-- [5.1](#null-and-undefined--no-overloading) **No overloading**: Don't overload the meaning of `null` and `undefined` to mean anything other than 'missing value'
+- [5.1](#null-and-undefined--no-overloading) **No overloading**: Don't overload the meaning of `null` and `undefined` to mean anything other than 'unset'.
 
     > Why? It breaks expectations and makes it impossible to interpret the data by looking at it.
 
@@ -139,7 +138,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | *missing*             | null           |
 
 <a name='null-and-undefined--objects-and-arrays'></a>
-- [5.4](#null-and-undefined--objects-and-arrays) **Complex types**: To express the absence of a value in columns that contain objects or arrays, add another column that controls whether your array or object is present. If it isn't, it should be undefined.
+- [5.4](#null-and-undefined--objects-and-arrays) **Complex types**: To express the absence of a value in columns that contain objects or arrays, add another column that determines whether your array or object is present. If it isn't, it should be undefined.
 
     :x:
 
@@ -224,7 +223,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
 <a name='other-types--numbers-as-strings'></a>
 - [6.4](#other-types--numbers-as-strings) **Numbers as strings**: Don't save numbers as strings except when saving data like phone numbers or ID numbers for which leading zeroes are significant and for which arithmetic operations don't make sense.
 
-    > Why? It means you don't have to cast when performing arithmetic.
+    > Why? It means you don't have to cast when performing arithmetic or when comparing values.
 
     | :x: height             | :white_check_mark: height |
     | :---------------- | :----------------- |
@@ -246,7 +245,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     | '20 stones'      | { unit: 'STONES', value: 20 }          |
 
 <a name='other-types--sets'></a>
-- [6.6](#other-types--sets) **Sets**: Model sets as arrays containing uppercase string constants. Use JavaScript's `Set` class where appropriate.
+- [6.6](#other-types--sets) **Sets**: Model sets as arrays containing uppercase string constants. Use JavaScript's `Set` class in your code where appropriate.
 
     > Why? You can look at sets as multi-valued enumerations.
 
@@ -277,7 +276,7 @@ An enumeration is a type that allows a limited number of values, e.g. a userType
     > Why? It's what we use in JavaScript which means we don't have to convert or mix the two in our code.
 
 <a name='names--collection-names'></a>
-- [7.3](#names--collection-names) **Collection names**: Collection names should be pluralized and in camelCase. Use dots when there is a relationship between collections (e.g. `user` and `user.appointments`)
+- [7.3](#names--collection-names) **Collection names**: Collection names should be pluralized and in camelCase. Use dots when there is a relationship between collections (e.g. `users` and `users.appointments`)
 
 ## Object modelling
 
