@@ -254,6 +254,16 @@ An enumeration is a type that allows a limited number of values, e.g. a `role` f
     | ['Dolphin', 'Pigeon', 'Bee']             | ['DOLPHIN', 'PIGEON', 'BEE']          |
     | { DOLPHIN: true, PIGEON: false, BEE: false }             | ['DOLPHIN']           |
 
+<a name='other-types--object-ids'></a>
+- [6.7](#other-types--object-ids) **ObjectIds**: Don't use MongoDB's ObjectId type. Instead, set _id fields yourself, either by using a property of your data that is naturally unique or by creating random strings.
+
+    > Why? Serializing and deserializing ObjectIds is just too much of a hassle and easily leads to bugs.
+
+    | :x: _id             | :white_check_mark: _id |
+    | :---------------- | :----------------- |
+    | ObjectId("5937a6a76cb02c00018577fe")             | '6xAySKn98aZ66vN'          |
+    | ObjectId("5937a7136cb02c00018577ff")             | 'eOiga4lkLaW99ER'          |
+
 ## Names
 
 <a name='names--abbreviations'></a>
@@ -289,5 +299,4 @@ An enumeration is a type that allows a limited number of values, e.g. a `role` f
 ## Todo (pull requests welcome)
 
 - Normalization/denormalization
-- ObjectIds
 - Migrations
