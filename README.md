@@ -299,4 +299,3 @@ An enumeration is a type that allows a limited number of values, e.g. a `role` f
 ## Todo (pull requests welcome)
 
 - Normalization/denormalization
-- Migrations
